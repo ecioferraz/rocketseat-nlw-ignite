@@ -7,6 +7,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        stripes:
+          'linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 12.5%, transparent 12.5%, transparent)',
+      },
+      backgroundSize: {
+        stripes: '100% 8px',
+      },
+      blur: {
+        full: '194px',
+      },
       colors: {
         gray: {
           50: '#eaeaea',
@@ -72,6 +82,9 @@ module.exports = {
       fontFamily: {
         sans: 'var(--font-roboto)',
         alt: 'var(--font-bai-jamjuree)',
+      },
+      fontSize: {
+        '5xl': '2.5rem',
       },
     },
   },
