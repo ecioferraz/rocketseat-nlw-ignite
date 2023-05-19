@@ -9,7 +9,6 @@ const pump = promisify(pipeline)
 
 export default async function uploadRoutes(app: FastifyInstance) {
   app.post('/upload', async (req, res) => {
-    console.log('upload')
     const upload = await req.file({
       limits: { fileSize: 5_242_880 /* 5mb */ },
     })
@@ -27,7 +26,7 @@ export default async function uploadRoutes(app: FastifyInstance) {
     const fileName = fileId.concat(extension)
 
     const writeStream = createWriteStream(
-      resolve(__dirname, '../../uploads/', fileName),
+      resolve(__dirname, '..', '..', 'uploads', fileName),
     )
 
     await pump(upload.file, writeStream)

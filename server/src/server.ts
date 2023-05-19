@@ -6,7 +6,7 @@ import jwt from '@fastify/jwt'
 import multipart from '@fastify/multipart'
 import fastifyStatic from '@fastify/static'
 
-import { memoriesRoutes } from './routes/memories'
+import memoriesRoutes from './routes/memories'
 import authRoutes from './routes/auth'
 import uploadRoutes from './routes/upload'
 import { resolve } from 'path'
@@ -16,7 +16,7 @@ const app = fastify()
 app.register(multipart)
 
 app.register(fastifyStatic, {
-  prefix: '/upload',
+  prefix: '/uploads',
   root: resolve(__dirname, '../uploads'),
 })
 
@@ -25,6 +25,7 @@ app.register(cors, { origin: true })
 // origin: ['site1', 'site2'...] para especificar permissões
 
 app.register(jwt, { secret: 'spacetime' })
+
 app.register(authRoutes)
 app.register(memoriesRoutes)
 app.register(uploadRoutes)
