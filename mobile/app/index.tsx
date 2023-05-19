@@ -1,6 +1,10 @@
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
+import * as SecureStore from 'expo-secure-store'
+import { useRouter } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 import { styled } from 'nativewind'
+import { useEffect } from 'react'
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 
 import {
   Roboto_400Regular as Roboto400Regular,
@@ -9,18 +13,64 @@ import {
 } from '@expo-google-fonts/roboto'
 import { BaiJamjuree_700Bold as BaiJamjuree700Bold } from '@expo-google-fonts/bai-jamjuree'
 
-import blurBg from './src/assets/bg-blur.png'
-import NWLLogo from './src/assets/nwl-spacetime-logo.svg'
-import Stripes from './src/assets/stripes.svg'
+import blurBg from '../src/assets/bg-blur.png'
+import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
+import Stripes from '../src/assets/stripes.svg'
+import { api } from '../src/lib/api'
 
 const StyledStripes = styled(Stripes)
 
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint:
+    'https://github.com/settings/connections/applications/b95d864c8b0f8f966bb9',
+}
+
 export default function App() {
+  const router = useRouter()
+
   const [hasLoadedFonts] = useFonts({
     Roboto400Regular,
     Roboto700Bold,
     BaiJamjuree700Bold,
   })
+
+  const [, response, signInWithGithub] = useAuthRequest(
+    {
+      clientId: 'b95d864c8b0f8f966bb9',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'nlwspacetime',
+      }),
+    },
+    discovery,
+  )
+
+  const handleGithubOAuthCode = async (code: string) => {
+    const {
+      data: { token },
+    } = await api.post('/register', { code })
+
+    await SecureStore.setItemAsync('token', token)
+
+    router.push('/memories')
+  }
+
+  useEffect(() => {
+    // TO GET LOCAL IP
+    // console.log(
+    //   makeRedirectUri({
+    //     scheme: 'nlwspacetime',
+    //   }),
+    // )
+
+    if (response?.type === 'success') {
+      const { code } = response.params
+
+      handleGithubOAuthCode(code)
+    }
+  }, [response])
 
   if (!hasLoadedFonts) return null
 
@@ -47,6 +97,7 @@ export default function App() {
         <TouchableOpacity
           activeOpacity={0.7}
           className="rounded-full bg-green-500 px-5 py-2"
+          onPress={() => signInWithGithub()}
         >
           <Text className="font-alt text-sm uppercase text-black">
             Cadastrar lembrança
