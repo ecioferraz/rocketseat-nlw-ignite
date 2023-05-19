@@ -36,17 +36,22 @@ export default async function authRoutes(app: FastifyInstance) {
       avatar_url: z.string().url(),
     })
 
-    const { avatar_url: avatarUrl, id, login, name } = userSchema.parse(data)
+    const {
+      avatar_url: avatarUrl,
+      id: githubId,
+      login,
+      name,
+    } = userSchema.parse(data)
 
     let user = await prisma.user.findUnique({
-      where: { githubId: id },
+      where: { githubId },
     })
 
     if (!user) {
       user = await prisma.user.create({
         data: {
           avatarUrl,
-          githubId: id,
+          githubId,
           login,
           name,
         },
@@ -55,7 +60,7 @@ export default async function authRoutes(app: FastifyInstance) {
 
     const token = app.jwt.sign(
       { name, avatarUrl },
-      { sub: `${id}`, expiresIn: '30 days' },
+      { sub: user.id, expiresIn: '30 days' },
     )
 
     return { token }
