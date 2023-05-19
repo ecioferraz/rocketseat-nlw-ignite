@@ -1,24 +1,12 @@
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import * as SecureStore from 'expo-secure-store'
 import { useRouter } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import { styled } from 'nativewind'
 import { useEffect } from 'react'
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-import {
-  Roboto_400Regular as Roboto400Regular,
-  Roboto_700Bold as Roboto700Bold,
-  useFonts,
-} from '@expo-google-fonts/roboto'
-import { BaiJamjuree_700Bold as BaiJamjuree700Bold } from '@expo-google-fonts/bai-jamjuree'
-
-import blurBg from '../src/assets/bg-blur.png'
 import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
-import Stripes from '../src/assets/stripes.svg'
-import { api } from '../src/lib/api'
 
-const StyledStripes = styled(Stripes)
+import { api } from '../src/lib/api'
 
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
@@ -29,12 +17,6 @@ const discovery = {
 
 export default function App() {
   const router = useRouter()
-
-  const [hasLoadedFonts] = useFonts({
-    Roboto400Regular,
-    Roboto700Bold,
-    BaiJamjuree700Bold,
-  })
 
   const [, response, signInWithGithub] = useAuthRequest(
     {
@@ -72,15 +54,8 @@ export default function App() {
     }
   }, [response])
 
-  if (!hasLoadedFonts) return null
-
   return (
-    <ImageBackground
-      source={blurBg}
-      className="relative flex-1 items-center bg-gray-900 px-8 py-10"
-    >
-      <StyledStripes className="absolute left-0" />
-
+    <View className="flex-1 items-center px-8 py-10">
       <View className="flex-1 items-center justify-center gap-6">
         <NWLLogo />
 
@@ -108,8 +83,6 @@ export default function App() {
       <Text className="text-center font-body text-sm leading-relaxed text-gray-200">
         Feito com 💜 no NLW da Rocketseat
       </Text>
-
-      <StatusBar style="light" translucent />
-    </ImageBackground>
+    </View>
   )
 }
