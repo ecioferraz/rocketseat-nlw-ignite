@@ -32,7 +32,7 @@ export default function Layout() {
     SecureStore.getItemAsync('token').then((token) => {
       setIsUserAuthenticated(!!token)
     })
-  })
+  }, [])
 
   return !hasLoadedFonts ? (
     <SplashScreen />
@@ -44,13 +44,14 @@ export default function Layout() {
 
       <Stack
         screenOptions={{
+          animation: 'fade',
           contentStyle: { backgroundColor: 'transparent' },
           headerShown: false,
         }}
       >
         <Stack.Screen name="index" redirect={isUserAuthenticated} />
-        <Stack.Screen name="new" />
         <Stack.Screen name="memories" />
+        <Stack.Screen name="new" />
       </Stack>
     </ImageBackground>
   )
