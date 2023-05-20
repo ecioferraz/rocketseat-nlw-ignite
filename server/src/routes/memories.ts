@@ -12,16 +12,17 @@ export default async function memoriesRoutes(app: FastifyInstance) {
       where: { userId: req.user.sub },
     })
 
-    return memories.map(({ id, coverUrl, content }) => {
+    return memories.map(({ id, coverUrl, content, createdAt }) => {
       if (content.length > 115) {
         return {
           id,
           coverUrl,
+          createdAt,
           excerpt: content.substring(0, 115).concat('...'),
         }
       }
 
-      return { id, coverUrl, excerpt: content }
+      return { id, coverUrl, createdAt, excerpt: content }
     })
   })
 
