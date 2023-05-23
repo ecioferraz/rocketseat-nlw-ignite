@@ -3,7 +3,9 @@ import { cookies } from 'next/headers'
 import { api } from '@/lib/api'
 import Image from 'next/image'
 import dayjs from 'dayjs'
-import { Edit, Trash2 } from 'lucide-react'
+import MemoryOptions from '@/components/MemoryOptions'
+import Link from 'next/link'
+import { ChevronLeft } from 'lucide-react'
 
 interface MemoryDetailsProps {
   params: { id: string }
@@ -26,12 +28,15 @@ export default async function MemoryDetails({
 
   const { coverUrl, createdAt, content } = memory as Memory
 
-  // const handleDelete = async () => {
-  //   const response = confirm('Tem certeza que deseja excluir')
-  // }
-
   return (
     <div className="space-y-4 p-8" key={id}>
+      <Link
+        href="/"
+        className="flex items-center gap-1 text-sm text-gray-200 hover:text-gray-100"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        voltar a timeline
+      </Link>
       <time className="-ml-8 flex items-center gap-2 text-sm text-gray-100 before:h-px before:w-5 before:bg-gray-50">
         {dayjs(createdAt).locale('pt-br').format('DD [de] MMMM, YYYY')}
       </time>
@@ -43,20 +48,7 @@ export default async function MemoryDetails({
         width={592}
       />
       <p className="text-lg leading-relaxed text-gray-100">{content}</p>
-      <div className="flex flex-row justify-end gap-2">
-        <button className="flex items-center gap-2 rounded-full bg-purple-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black hover:bg-purple-600">
-          <Edit className="h-4 w-4" />
-          Editar
-        </button>
-
-        <button
-          className="flex items-center gap-2 rounded-full bg-red-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black hover:bg-red-600"
-          // onClick={handleDelete}
-        >
-          <Trash2 className="h-4 w-4" />
-          Excluir
-        </button>
-      </div>
+      <MemoryOptions id={id} />
     </div>
   )
 }
