@@ -18,15 +18,15 @@ interface Memory {
 export default async function Home() {
   const isAuthenticated = cookies().has('token')
 
+  if (!isAuthenticated) return <EmptyMemories />
+
   const token = cookies().get('token')?.value
 
   const { data: memories } = await api.get('/memories', {
     headers: { Authorization: `Bearer ${token}` },
   })
 
-  console.log(memories[0])
-
-  return !isAuthenticated || !memories.length ? (
+  return !memories.length ? (
     <EmptyMemories />
   ) : (
     <div className="flex flex-col gap-10 p-8">
