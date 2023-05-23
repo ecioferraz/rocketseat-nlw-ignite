@@ -18,7 +18,7 @@ export default async function memoriesRoutes(app: FastifyInstance) {
           id,
           coverUrl,
           createdAt,
-          excerpt: content.substring(0, 115).concat('...'),
+          excerpt: content.substring(0, 115).trim().concat('...'),
         }
       }
 
