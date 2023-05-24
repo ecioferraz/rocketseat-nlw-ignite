@@ -1,9 +1,10 @@
 'use client'
 
-import { api } from '@/lib/api'
 import cookie from 'js-cookie'
 import { Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+
+import { api } from '@/lib/api'
 
 interface MemoryOptionsProps {
   fileName: string
