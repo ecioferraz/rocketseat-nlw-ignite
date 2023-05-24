@@ -1,11 +1,11 @@
-import { cookies } from 'next/headers'
-
-import { api } from '@/lib/api'
-import Image from 'next/image'
 import dayjs from 'dayjs'
-import MemoryOptions from '@/components/MemoryOptions'
+import { cookies } from 'next/headers'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
+
+import MemoryOptions from '@/components/MemoryOptions'
+import { api } from '@/lib/api'
 
 interface MemoryDetailsProps {
   params: { id: string }
@@ -48,7 +48,7 @@ export default async function MemoryDetails({
         width={592}
       />
       <p className="text-lg leading-relaxed text-gray-100">{content}</p>
-      <MemoryOptions id={id} />
+      <MemoryOptions fileName={coverUrl.split('/')[4]} id={id} />
     </div>
   )
 }

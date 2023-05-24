@@ -6,10 +6,11 @@ import { Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 interface MemoryOptionsProps {
+  fileName: string
   id: string
 }
 
-export default function MemoryOptions({ id }: MemoryOptionsProps) {
+export default function MemoryOptions({ fileName, id }: MemoryOptionsProps) {
   const router = useRouter()
 
   const handleDelete = async () => {
@@ -17,12 +18,14 @@ export default function MemoryOptions({ id }: MemoryOptionsProps) {
 
     if (response) {
       const token = cookie.get('token')
+      const headers = { Authorization: `Bearer ${token}` }
 
-      await api.delete(`/memories/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await api.delete(`/upload/${fileName}`, { headers })
+
+      await api.delete(`/memories/${id}`, { headers })
 
       router.push('/')
+      router.refresh()
     }
   }
 
