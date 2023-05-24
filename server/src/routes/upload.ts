@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
 import { FastifyInstance } from 'fastify'
-import { createWriteStream } from 'fs'
+import { createWriteStream, unlink } from 'fs'
 import { resolve, extname } from 'path'
 import { pipeline } from 'stream'
 import { promisify } from 'util'
@@ -35,5 +35,11 @@ export default async function uploadRoutes(app: FastifyInstance) {
     const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
 
     return { fileUrl }
+  })
+
+  app.delete('/upload/:fileName', async (req) => {
+    const { fileName } = req.params as { fileName: string }
+
+    await promisify(unlink)(resolve(__dirname, '..', '..', 'uploads', fileName))
   })
 }
