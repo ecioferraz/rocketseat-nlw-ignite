@@ -21,6 +21,11 @@ export default function NewMemoryForm() {
 
     let coverUrl = ''
 
+    if (fileToUpload instanceof File && fileToUpload.size === 0) {
+      alert('Selecione uma mídia!')
+      return
+    }
+
     if (fileToUpload) {
       const uploadFormData = new FormData()
       uploadFormData.set('file', fileToUpload)
@@ -47,6 +52,7 @@ export default function NewMemoryForm() {
     )
 
     router.push('/')
+    router.refresh()
   }
 
   return (
