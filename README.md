@@ -18,6 +18,7 @@ Trata-se de uma aplicação Full Stack, desenvolvida para Web e Mobile, que func
 - JWT
 - Js Cookie
 - Lucide
+- Day.js
 - Eslint
 - Prettier
 
