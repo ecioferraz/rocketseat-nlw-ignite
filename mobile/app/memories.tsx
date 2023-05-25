@@ -1,7 +1,12 @@
 import { Link, useRouter } from 'expo-router'
 import * as SecureStore from 'expo-secure-store'
 import Icon from '@expo/vector-icons/Feather'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import {
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
@@ -15,6 +20,7 @@ export default function Memories() {
   const { bottom, top } = useSafeAreaInsets()
   const router = useRouter()
   const [memories, setMemories] = useState<MemoryProps[]>([])
+  const [refresh, setRefresh] = useState(true)
 
   const signOut = async () => {
     await SecureStore.deleteItemAsync('token')
@@ -30,6 +36,7 @@ export default function Memories() {
     })
 
     setMemories(data)
+    setRefresh(false)
   }
 
   useEffect(() => {
@@ -40,6 +47,14 @@ export default function Memories() {
     <ScrollView
       className="flex-1"
       contentContainerStyle={{ paddingBottom: bottom, paddingTop: top }}
+      refreshControl={
+        <RefreshControl
+          colors={['#36dc81']}
+          refreshing={refresh}
+          onRefresh={loadMemories}
+          tintColor={'#36dc81'}
+        />
+      }
     >
       <View className="mt-4 flex-row items-center justify-between px-8">
         <NWLLogo />
