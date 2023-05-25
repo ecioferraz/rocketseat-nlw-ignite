@@ -37,11 +37,13 @@ export default function MemoryCard({
   const handleOnPress = () => {
     Alert.alert('Tem certeza que deseja excluir memória?', null, [
       {
-        onPress: () => handleDelete(),
-        text: 'Excluir',
+        style: 'cancel',
+        text: 'Cancelar',
       },
       {
-        text: 'Cancelar',
+        onPress: () => handleDelete(),
+        style: 'destructive',
+        text: 'Excluir',
       },
     ])
   }
