@@ -5,7 +5,7 @@
 
 Este foi um projeto desenvolvido para o programa NLW (Next Level Week), da Rocketseat, na trilha Ignite.
 
-Trata-se de uma aplicação Full Stack, desenvolvida para Web e Mobile, que funciona como uma cápsula do tempo, onde o usuário pode adicionar à uma timeline textos, fotos e vídeos de acontecimentos marcantes da sua vida, organizados por mês e ano.
+Trata-se de uma aplicação Full Stack, desenvolvida para Web e Mobile, que funciona como uma cápsula do tempo, onde o usuário pode adicionar à uma timeline textos e fotos de acontecimentos marcantes da sua vida, organizados por mês e ano.
 ## Stack e ferramentas utilizadas
 
 **Front-end:**
