@@ -28,7 +28,7 @@ export default function NewMemory() {
   const openImagePicker = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 1,
       })
 
@@ -119,7 +119,7 @@ export default function NewMemory() {
             <View className="flex-row items-center gap-2">
               <Icon color="#FFF" name="image" />
               <Text className="font-body text-sm text-gray-200">
-                Adicionar foto ou vídeo de capa
+                Adicionar foto de capa
               </Text>
             </View>
           )}

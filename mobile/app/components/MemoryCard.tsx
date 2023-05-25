@@ -4,8 +4,8 @@ import * as SecureStore from 'expo-secure-store'
 import Icon from '@expo/vector-icons/Feather'
 import { Alert, Image, Text, TouchableOpacity, View } from 'react-native'
 
-import { api } from '../../src/lib/api'
 import { MemoryProps } from '../[id]'
+import { api } from '../../src/lib/api'
 
 interface MemoryCardProps extends MemoryProps {
   details?: boolean

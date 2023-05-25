@@ -9,12 +9,14 @@ import {
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
-import { useEffect, useState } from 'react'
-import { api } from '../src/lib/api'
 import 'dayjs/locale/pt-br'
-import MemoryCard from './components/MemoryCard'
+import { useEffect, useState } from 'react'
+
 import { MemoryProps } from './[id]'
+import MemoryCard from './components/MemoryCard'
+import EmptyMemories from './components/EmptyMemories'
+import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
+import { api } from '../src/lib/api'
 
 export default function Memories() {
   const { bottom, top } = useSafeAreaInsets()
@@ -75,16 +77,20 @@ export default function Memories() {
       </View>
 
       <View className="mt-6 space-y-10">
-        {memories.map(({ coverUrl, createdAt, excerpt, id }) => (
-          <MemoryCard
-            coverUrl={coverUrl}
-            createdAt={createdAt}
-            details
-            excerpt={excerpt}
-            id={id}
-            key={id}
-          />
-        ))}
+        {memories.length ? (
+          memories.map(({ coverUrl, createdAt, excerpt, id }) => (
+            <MemoryCard
+              coverUrl={coverUrl}
+              createdAt={createdAt}
+              details
+              excerpt={excerpt}
+              id={id}
+              key={id}
+            />
+          ))
+        ) : (
+          <EmptyMemories />
+        )}
       </View>
     </ScrollView>
   )

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import MemoryCard from './components/MemoryCard'
+
 import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
 import { api } from '../src/lib/api'
 
