@@ -1,26 +1,20 @@
 import { Link, useRouter } from 'expo-router'
 import * as SecureStore from 'expo-secure-store'
 import Icon from '@expo/vector-icons/Feather'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import NWLLogo from '../src/assets/nwl-spacetime-logo.svg'
 import { useEffect, useState } from 'react'
 import { api } from '../src/lib/api'
-import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
-
-interface Memory {
-  coverUrl: string
-  createdAt: string
-  excerpt: string
-  id: string
-}
+import MemoryCard from './components/MemoryCard'
+import { MemoryProps } from './[id]'
 
 export default function Memories() {
   const { bottom, top } = useSafeAreaInsets()
   const router = useRouter()
-  const [memories, setMemories] = useState<Memory[]>([])
+  const [memories, setMemories] = useState<MemoryProps[]>([])
 
   const signOut = async () => {
     await SecureStore.deleteItemAsync('token')
@@ -68,32 +62,14 @@ export default function Memories() {
 
       <View className="mt-6 space-y-10">
         {memories.map(({ coverUrl, createdAt, excerpt, id }) => (
-          <View className="space-y-4" key={id}>
-            <View className="flex-row items-center gap-2">
-              <View className="h-px w-5 bg-gray-50" />
-              <Text className="font-body text-xs text-gray-100">
-                {dayjs(createdAt).locale('pt-br').format('D [de] MMMM, YYYY')}
-              </Text>
-            </View>
-            <View className="space-y-4 px-8">
-              <Image
-                alt=""
-                className="aspect-video w-full rounded-lg"
-                source={{ uri: coverUrl }}
-              />
-              <Text className="font-body text-base leading-relaxed text-gray-100">
-                {excerpt}
-              </Text>
-              <Link href="/memories/id" asChild>
-                <TouchableOpacity className="flex-row items-center gap-2">
-                  <Text className="font-body text-sm text-gray-200">
-                    Ler mais
-                  </Text>
-                  <Icon color="#9e9ea0" name="arrow-right" size={16}></Icon>
-                </TouchableOpacity>
-              </Link>
-            </View>
-          </View>
+          <MemoryCard
+            coverUrl={coverUrl}
+            createdAt={createdAt}
+            details
+            excerpt={excerpt}
+            id={id}
+            key={id}
+          />
         ))}
       </View>
     </ScrollView>

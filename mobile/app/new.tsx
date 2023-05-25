@@ -69,7 +69,7 @@ export default function NewMemory() {
       { headers: { Authorization: `Bearer ${token}` } },
     )
 
-    router.push('/memories')
+    router.push('memories')
   }
 
   return (
