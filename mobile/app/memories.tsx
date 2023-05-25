@@ -66,12 +66,11 @@ export default function Memories() {
             </TouchableOpacity>
           </Link>
 
-          <TouchableOpacity
-            className="h-10 w-10 items-center justify-center rounded-full bg-red-500"
-            onPress={signOut}
-          >
-            <Icon color="#000" name="log-out" size={16} />
-          </TouchableOpacity>
+          <View className="h-10 w-10 items-center justify-center rounded-full bg-red-500">
+            <TouchableOpacity onPress={signOut}>
+              <Icon color="#000" name="log-out" size={16} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
 
